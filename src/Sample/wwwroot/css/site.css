@@ -1,0 +1,37 @@
+﻿*{
+    margin: 0;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    background: steelblue;
+}
+
+header a{
+    display: block;
+    text-align: center;
+    line-height: 3;
+    font-size: 20px;
+    color: white;
+    padding: 0 30px 0 30px;
+    text-decoration: unset;
+}
+
+header a:hover{
+    color: lightblue;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.brand{
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    margin-left: 20px;
+    margin-right: 300px;
+}
+
+.editor-area{
+    margin-left: 200px;
+    margin-right: 200px;
+}

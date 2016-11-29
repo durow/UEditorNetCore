@@ -7,11 +7,11 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>4f6b91c7-e50d-48b3-bcd9-4f13bf15202e</ProjectGuid>
+    <ProjectGuid>4a3f3856-37ac-4143-be15-6755ea996180</ProjectGuid>
     <RootNamespace>UEditorNetCore</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
 
   <PropertyGroup>
