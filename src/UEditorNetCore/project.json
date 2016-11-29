@@ -2,7 +2,7 @@
   "title": "UEditorNetCore",
   "copyright": "durow@2016",
   "description": "UEditor for asp.net core.",
-  "version": "1.0.0-*",
+  "version": "1.0.1",
   "packOptions": {
     "projectUrl": "https://github.com/durow/UEditorNetCore"
   },

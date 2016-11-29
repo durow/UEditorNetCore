@@ -26,7 +26,7 @@ namespace UEditorNetCore.Handlers
             if (UploadConfig.Base64)
             {
                 uploadFileName = UploadConfig.Base64Filename;
-                uploadFileBytes = Convert.FromBase64String(Request.Query[UploadConfig.UploadFieldName]);
+                uploadFileBytes = Convert.FromBase64String(Request.Form[UploadConfig.UploadFieldName]);
             }
             else
             {
