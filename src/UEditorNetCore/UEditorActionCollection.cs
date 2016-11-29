@@ -21,6 +21,22 @@ namespace UEditorNetCore
             Add("catchimage", CatchImageAction);
         }
 
+        public new UEditorActionCollection Add(string action, Action<HttpContext> handler)
+        {
+            if (ContainsKey(action))
+                this[action] = handler;
+            else
+                base.Add(action, handler);
+
+            return this;
+        }
+
+        public new UEditorActionCollection Remove(string action)
+        {
+            base.Remove(action);
+            return this;
+        }
+
         private void ConfigAction(HttpContext context)
         {
             new ConfigHandler(context).Process();

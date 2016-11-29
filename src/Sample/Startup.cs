@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using UEditorNetCore;
+using Microsoft.AspNetCore.Http;
 
 namespace Sample
 {
@@ -28,7 +29,15 @@ namespace Sample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddUEditorService();
+            services.AddUEditorService()
+                .Add("test", context =>
+                {
+                    context.Response.WriteAsync("from test action");
+                })
+                .Add("test2", context =>
+                {
+                    context.Response.WriteAsync("from test2 action");
+                });
             services.AddMvc();
         }
 
