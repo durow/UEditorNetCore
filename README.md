@@ -1,7 +1,10 @@
 # 关于UEditorNetCore
-百度在线编辑器UEditor在ASP.NET Core下的服务端，使用简单，易于扩展。  
+百度在线编辑器UEditor在ASP.NET Core下的服务端，使用简单，易于扩展。
+
 UEditor官网：http://ueditor.baidu.com/website/index.html  
+
 UEditor开源项目：https://github.com/fex-team/ueditor  
+
 # 安装
 ```
 Install-Package UEditorNetCore
