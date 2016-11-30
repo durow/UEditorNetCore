@@ -1,10 +1,8 @@
 # 关于UEditorNetCore
-百度在线编辑器UEditor在ASP.NET Core下的服务端，使用简单，易于扩展。
-
-UEditor官网：http://ueditor.baidu.com/website/index.html  
-
-UEditor开源项目：https://github.com/fex-team/ueditor  
-
+百度在线编辑器UEditor在ASP.NET Core下的服务端，使用简单，易于扩展。   
+相关文章：http://www.cnblogs.com/durow/p/6116393.html    
+UEditor官网：http://ueditor.baidu.com/website/index.html    
+UEditor源代码：https://github.com/fex-team/ueditor    
 # 安装
 ```
 Install-Package UEditorNetCore
@@ -22,7 +20,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-## 2.添加控制器用于服务端操作
+## 2.添加Controller用于处理来自UEditor的请求
 ``` C#
 [Route("api/[controller]")] //配置路由
 public class UEditorController : Controller
