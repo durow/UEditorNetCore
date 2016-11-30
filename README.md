@@ -43,8 +43,8 @@ serverUrl:"/api/UEditor"
 ```
 
 ## 4.修改服务端配置config.json
-所有上传相关的路径均通过相应的PathFormat来配置，不使用Prefix，所有Prefix设置为"/"。
-例如对于图片来说：
+上传类的操作需要配置相应的PathFormat和Prefix，在示例中部署在web根目录，因此Prefix都设置为"/"。使用时要根据具体情况配置。
+例如示例中图片上传的配置如下：
 ``` json
 "imageUrlPrefix": "/", /* 图片访问路径前缀 */
 "imagePathFormat": "upload/image/{yyyy}{mm}{dd}/{time}{rand:6}", 
