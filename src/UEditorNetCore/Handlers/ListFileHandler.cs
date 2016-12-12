@@ -36,8 +36,8 @@ namespace UEditorNetCore.Handlers
         {
             try
             {
-                Start = String.IsNullOrEmpty(Request.Form["start"]) ? 0 : Convert.ToInt32(Request.Form["start"]);
-                Size = String.IsNullOrEmpty(Request.Form["size"]) ? Config.GetInt("imageManagerListSize") : Convert.ToInt32(Request.Form["size"]);
+                Start = String.IsNullOrEmpty(Request.Query["start"]) ? 0 : Convert.ToInt32(Request.Query["start"]);
+                Size = String.IsNullOrEmpty(Request.Query["size"]) ? Config.GetInt("imageManagerListSize") : Convert.ToInt32(Request.Query["size"]);
             }
             catch (FormatException)
             {
