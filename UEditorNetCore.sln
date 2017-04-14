@@ -1,18 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8C912659-24A7-4553-8058-61F7A911B5AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5BEAA526-1CF1-48E8-AE15-EB19DE84F2A4}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sample", "src\Sample\Sample.xproj", "{9A9A8D2B-5388-4C19-B8B0-7AD84EACB96A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "src\Sample\Sample.csproj", "{9A9A8D2B-5388-4C19-B8B0-7AD84EACB96A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "UEditorNetCore", "src\UEditorNetCore\UEditorNetCore.xproj", "{4A3F3856-37AC-4143-BE15-6755EA996180}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UEditorNetCore", "src\UEditorNetCore\UEditorNetCore.csproj", "{4A3F3856-37AC-4143-BE15-6755EA996180}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
