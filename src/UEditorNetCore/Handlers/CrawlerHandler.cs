@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net;
-using Microsoft.AspNetCore.Http;
 
 namespace UEditorNetCore.Handlers
 {
@@ -73,27 +73,48 @@ namespace UEditorNetCore.Handlers
                     return this;
                 }
                 ServerUrl = PathFormatter.Format(Path.GetFileName(this.SourceUrl), Config.GetString("catcherPathFormat"));
-                var savePath = Path.Combine(Config.WebRootPath, ServerUrl);
-                if (!Directory.Exists(Path.GetDirectoryName(savePath)))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(savePath));
-                }
+                //var savePath = Path.Combine(Config.WebRootPath, ServerUrl);
+                var savePath = Path.Combine(Config.GetString("catcherSaveAbsolutePath"), ServerUrl);
+                //
+
                 try
                 {
                     var stream = response.GetResponseStream();
-                    var reader = new BinaryReader(stream);
-                    byte[] bytes;
-                    using (var ms = new MemoryStream())
+                    //
+                    if (Config.GetValue<bool>("catcherFtpUpload"))
                     {
-                        byte[] buffer = new byte[4096];
-                        int count;
-                        while ((count = reader.Read(buffer, 0, buffer.Length)) != 0)
-                        {
-                            ms.Write(buffer, 0, count);
-                        }
-                        bytes = ms.ToArray();
+                        var fileExt = ServerUrl.Substring(savePath.LastIndexOf('.')).TrimStart('.');
+                        var key = Config.GetString("catcherPathFormat") + "." + fileExt;
+                        //FtpUpload.UploadFile(stream, savePath, Consts.ImgFtpServer.ip,
+                        //    Consts.ImgFtpServer.account, Consts.ImgFtpServer.pwd);
+                        AliyunOssUpload.UploadFile(Consts.AliyunOssServer.AccessEndpoint,
+                            Consts.AliyunOssServer.AccessKeyId, Consts.AliyunOssServer.AccessKeySecret,
+                            Consts.AliyunOssServer.BucketName, key, fileExt, stream);
                     }
-                    File.WriteAllBytes(savePath, bytes);
+                    else
+                    {
+                        if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                        }
+
+                        var reader = new BinaryReader(stream);
+                        byte[] bytes;
+                        using (var ms = new MemoryStream())
+                        {
+                            byte[] buffer = new byte[4096];
+                            int count;
+                            while ((count = reader.Read(buffer, 0, buffer.Length)) != 0)
+                            {
+                                ms.Write(buffer, 0, count);
+                            }
+
+                            bytes = ms.ToArray();
+                        }
+
+                        File.WriteAllBytes(savePath, bytes);
+                    }
+
                     State = "SUCCESS";
                 }
                 catch (Exception e)
