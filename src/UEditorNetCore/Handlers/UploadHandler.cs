@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 
 namespace UEditorNetCore.Handlers
 {
@@ -22,6 +22,7 @@ namespace UEditorNetCore.Handlers
         {
             byte[] uploadFileBytes = null;
             string uploadFileName = null;
+            Stream fileStream = null;
 
             if (UploadConfig.Base64)
             {
@@ -49,6 +50,7 @@ namespace UEditorNetCore.Handlers
                 uploadFileBytes = new byte[file.Length];
                 try
                 {
+                    fileStream = file.OpenReadStream();
                     file.OpenReadStream().Read(uploadFileBytes, 0, (int)file.Length);
                 }
                 catch (Exception)
@@ -61,16 +63,33 @@ namespace UEditorNetCore.Handlers
             Result.OriginFileName = uploadFileName;
 
             var savePath = PathFormatter.Format(uploadFileName, UploadConfig.PathFormat);
-            var localPath = Path.Combine(Config.WebRootPath, savePath);
+            //var localPath = Path.Combine(Config.WebRootPath, savePath);
+            var localPath = Path.Combine(UploadConfig.SaveAbsolutePath, savePath);
             try
             {
-                if (!Directory.Exists(Path.GetDirectoryName(localPath)))
+                if (UploadConfig.FtpUpload)
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(localPath));
+                    
+                    var fileExt = Path.GetExtension(uploadFileName).TrimStart('.');
+                    var key = savePath;//UploadConfig.PathFormat + "." + fileExt;
+                    //FtpUpload.UploadFile(new MemoryStream(uploadFileBytes), localPath, UploadConfig.FtpIp,
+                    //    UploadConfig.FtpAccount, UploadConfig.FtpPwd);
+                    AliyunOssUpload.UploadFile(Consts.AliyunOssServer.AccessEndpoint,
+                        Consts.AliyunOssServer.AccessKeyId, Consts.AliyunOssServer.AccessKeySecret,
+                        Consts.AliyunOssServer.BucketName, key, fileExt, new MemoryStream(uploadFileBytes));
                 }
-                File.WriteAllBytes(localPath, uploadFileBytes);
+                else
+                {
+
+                    if (!Directory.Exists(Path.GetDirectoryName(localPath)))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(localPath));
+                    }
+
+                    File.WriteAllBytes(localPath, uploadFileBytes);
+                }
                 Result.Url = savePath;
-                Result.State = UploadState.Success;
+                Result.State = UploadState.Success; 
             }
             catch (Exception e)
             {
@@ -125,12 +144,39 @@ namespace UEditorNetCore.Handlers
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class UploadConfig
     {
         /// <summary>
         /// 文件命名规则
         /// </summary>
         public string PathFormat { get; set; }
+
+        /// <summary>
+        /// 文件保存路径：绝对路径
+        /// </summary>
+        public string SaveAbsolutePath { get; set; }
+        /// <summary>
+        /// 是否 FTP 上传
+        /// </summary>
+        public bool FtpUpload { get; set; }
+
+        /// <summary>
+        /// FTP 账户
+        /// </summary>
+        public string FtpAccount { get; set; }
+
+        /// <summary>
+        /// FTP 密码
+        /// </summary>
+        public string FtpPwd { get; set; }
+
+        /// <summary>
+        /// IP 地址
+        /// </summary>
+        public string FtpIp { get; set; }
 
         /// <summary>
         /// 上传表单域名称
